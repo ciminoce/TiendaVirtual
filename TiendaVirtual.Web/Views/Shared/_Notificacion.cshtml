@@ -1,0 +1,17 @@
+﻿@if (TempData["Msg"] != null)
+{
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["Msg"]')
+    </script>
+}
+@if (TempData["Error"] != null)
+{
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script type="text/javascript">
+        toastr.error('@TempData["Error"]')
+    </script>
+}
+

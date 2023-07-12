@@ -1,0 +1,44 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<TiendaVirtual.Web.ViewModels.Categoria.CategoriaListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between">
+    <h2>Lista de Categorías</h2>
+
+
+</div>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreCategoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadProductos)
+        </th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCategoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadProductos)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.CategoriaId }, new { @class = "btn btn-info" }) 
+            </td>
+        </tr>
+    }
+
+</table>
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    pageSize = ViewBag.PageSize
+}))

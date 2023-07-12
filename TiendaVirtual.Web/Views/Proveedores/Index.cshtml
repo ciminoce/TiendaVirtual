@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TiendaVirtual.Web.ViewModels.Proveedor.ProveedorListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between">
+    <h2>Lista de Proveedores</h2>
+
+    <p>
+        @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+</div>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreProveedor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pais)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ciudad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreProveedor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pais)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ciudad)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProveedorId }, new {@class="btn btn-warning"}) 
+            @Html.ActionLink("Details", "Details", new { id = item.ProveedorId }, new { @class = "btn btn-info" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProveedorId }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

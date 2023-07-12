@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-3">
+        <div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+
+            <div class="card-header d-flex justify-content-between">
+                <label class="fw-bold">Categorías</label>
+                <i class="fa fa-2x fa-boxes"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad:</h6>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>@ViewBag.cantidadCategorias</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-3">
+        <div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header d-flex justify-content-between">
+                <label class="fw-bold">Productos</label>
+                <i class="fa fa-2x fa-product-hunt"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad:</h6>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>@ViewBag.cantidadProductos</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-header d-flex justify-content-between">
+                <label class="fw-bold">Clientes</label>
+                <i class="fa fa-2x fa-user"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad:</h6>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>@ViewBag.cantidadClientes</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="card text-bg-danger mb-3" style="max-width: 18rem;">
+            <div class="card-header d-flex justify-content-between">
+                <label class="fw-bold">Ventas</label>
+                <i class="fa fa-2x fa-shopping-bag"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad:</h6>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>@ViewBag.cantidadVentas</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="@Url.Content(TiendaVirtual.Utilidades.WC.LogoDeNeptuno)" alt="" width="200" height="200">
+    <h1 class="display-5 fw-bold">Neptuno Tienda Virtual</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Su sitio en la web para conseguir aquello que busca y más... Los esperamos Joder!!!</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
+        </div>
+    </div>
+</div>
