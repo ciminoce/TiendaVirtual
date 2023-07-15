@@ -24,7 +24,8 @@ namespace TiendaVirtual.Web
                       "~/Scripts/bootstrap.bundle.js",
                       "~/Scripts/toastr.js",
                       "~/Scripts/tiendaVirtual.js",
-                      "~/Scripts/fontawesome/all.min.js"
+                      "~/Scripts/fontawesome/all.min.js",
+                      "~/Scripts/sweetalert2.all.min.js"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

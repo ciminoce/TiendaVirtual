@@ -12,13 +12,15 @@ namespace TiendaVirtual.Web.Controllers
     public class CarritoController : Controller
     {
         // GET: Carrito
+        private readonly IServiciosCarrito _serviciosCarritos;
         private readonly IServiciosProductos _serviciosProductos;
         private readonly IMapper _mapper;
-        public CarritoController(IServiciosProductos serviciosProductos)
+        public CarritoController(IServiciosProductos serviciosProductos,
+            IServiciosCarrito serviciosCarritos)
         {
             _serviciosProductos = serviciosProductos;
             _mapper = AutoMapperConfig.Mapper;
-
+            _serviciosCarritos = serviciosCarritos;
         }
 
         private Carrito _carrito;
@@ -43,6 +45,7 @@ namespace TiendaVirtual.Web.Controllers
         public ActionResult MostrarCarrito()
         {
             _carrito = GetCarrito();
+
             return PartialView("_MostrarCarrito", _carrito);
         }
 
@@ -57,6 +60,21 @@ namespace TiendaVirtual.Web.Controllers
             {
                 _carrito = new Carrito();
                 Session["carrito"] = _carrito;
+            }
+
+            if (_carrito.GetCantidad()==0)
+            {
+                if (_serviciosCarritos.GetCantidad(User.Identity.Name) > 0)
+                {
+                    var listaItemsCarrito = _serviciosCarritos
+                        .GetCarrito(User.Identity.Name);
+                    foreach (var item in listaItemsCarrito)
+                    {
+                        _carrito.AddToCart(item);
+                    }
+                    Session["carrito"] = _carrito;
+                }
+
             }
             return _carrito;
         }
@@ -79,6 +97,7 @@ namespace TiendaVirtual.Web.Controllers
                 _carrito = GetCarrito();
                 _carrito.AddToCart(itemCarrito);
                 Session["carrito"] = _carrito;
+                _serviciosCarritos.Guardar(itemCarrito);
                 return RedirectToAction("Index",new {returnUrl});
 
             }
@@ -89,14 +108,28 @@ namespace TiendaVirtual.Web.Controllers
             }
         }
 
+        //public ActionResult RemoveFromCart(int productoId, string confirmarBorrado, string returnUrl)
+        //{
+        //    if (confirmarBorrado=="SI")
+        //    {
+        //        _carrito = GetCarrito();
+        //        _carrito.RemoveFromCart(productoId);
+        //        Session["carrito"] = _carrito;
+
+        //    }
+        //    return RedirectToAction("Index", new { returnUrl });
+
+        //}
         public ActionResult RemoveFromCart(int productoId, string returnUrl)
         {
             _carrito = GetCarrito();
             _carrito.RemoveFromCart(productoId);
             Session["carrito"] = _carrito;
+            _serviciosCarritos.Borrar(User.Identity.Name, productoId);
             return RedirectToAction("Index", new { returnUrl });
 
         }
+
         public ActionResult CancelOrder()
         {
             _carrito = GetCarrito();

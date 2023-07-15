@@ -5,18 +5,31 @@
 
 <h2>Carrito de Compras</h2>
 <hr />
+@*<script>
+
+    function ConfirmarBorrado(nombreProducto) {
+        if (confirm("Está seguro de borrar  " + nombreProducto + "?")) {
+            document.getElementById("confirmarBorrado").value = "SI";
+        }
+        else {
+            document.getElementById("confirmarBorrado").value = "NO";
+        }
+    }
+
+</script>*@
+
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model=>model.Items[0].NombreProducto)</th>
-            <th>@Html.DisplayNameFor(model=>model.Items[0].PrecioUnitario)</th>
-            <th>@Html.DisplayNameFor(model=>model.Items[0].Cantidad)</th>
-            <th>@Html.DisplayNameFor(model=>model.Items[0].PrecioTotal)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].NombreProducto)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].PrecioUnitario)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].Cantidad)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].PrecioTotal)</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model.Items)
+        @foreach (var item in Model.Items)
         {
             <tr>
                 <td>@item.NombreProducto</td>
@@ -24,20 +37,30 @@
                 <td style="text-align:right">@item.Cantidad</td>
                 <td style="text-align:right">@item.PrecioTotal</td>
                 <td>
-                    <a class="btn btn-danger" href="@Url.Action("RemoveFromCart",
-                                                   "Carrito",
-                                                   new {productoId=item.ProductoId,
-                                                       returnUrl=Request.Url.PathAndQuery})">
-                        <i class="fa fa-trash"></i>
-                    </a>
+                    @*<a class="btn btn-danger" href="@Url.Action("RemoveFromCart",
+                                                       "Carrito",
+                                                       new {productoId=item.ProductoId,
+                                                           returnUrl=Request.Url.PathAndQuery})">
+                            <i class="fa fa-trash"></i>
+                        </a>*@
+                    <form method="post" action="@Url.Action("RemoveFromCart","Carrito")" id="deleteForm">
+                        @Html.Hidden("productoId", item.ProductoId)
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @*<input type="hidden" name="confirmarBorrado" id="confirmarBorrado" />*@
+                        <button type="submit" class="btn btn-danger" onclick="return ConfirmarBorrado('@item.NombreProducto')">
+                            <i class="fa fa-trash"></i>
+                            Borrar
+                        </button>
+
+                    </form>
                 </td>
             </tr>
         }
         <tr>
             <td class="fw-bold">Totales:</td>
-            
-            <td colspan="2" class="fw-bold" style="text-align:right">@Model.Items.Sum(i=>i.Cantidad)</td>
-            <td class="fw-bold" style="text-align:right">@Model.Items.Sum(i=>i.PrecioTotal)</td>
+
+            <td colspan="2" class="fw-bold" style="text-align:right">@Model.Items.Sum(i => i.Cantidad)</td>
+            <td class="fw-bold" style="text-align:right">@Model.Items.Sum(i => i.PrecioTotal)</td>
         </tr>
     </tbody>
 </table>
@@ -55,3 +78,29 @@
         Confirmar Compra
     </a>
 </div>
+@section scripts
+{
+    <script>
+        function ConfirmarBorrado(nombreProducto) {
+            debugger;
+            Swal.fire({
+                title: 'Confirmar borrado',
+                text: '¿Desea borrar el producto ' + nombreProducto + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                console.log(result);
+                /*debugger;*/
+                if (result.isConfirmed) {
+                    // El usuario hizo clic en "Sí", enviar el formulario
+                    document.getElementById('deleteForm').submit();
+                }
+            });
+
+            // Devolver false para evitar el envío automático del formulario
+            return false;
+        }
+    </script>
+}

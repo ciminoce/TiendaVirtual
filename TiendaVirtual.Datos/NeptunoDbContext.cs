@@ -24,6 +24,7 @@ namespace TiendaVirtual.Datos
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
         public DbSet<Venta> Ventas { get; set; }
+        public DbSet<ItemCarrito> Carrito { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using TiendaVirtual.Entidades.Entidades;
 
-namespace TiendaVirtual.Datos.Interfaces
+namespace TiendaVirtual.Servicios.Interfaces
 {
-    public interface IRepositorioCarritos
+    public interface IServiciosCarrito
     {
         List<ItemCarrito> GetCarrito(string user);
         void Guardar(ItemCarrito carritoTemp);
+        void Borrar(string user, int productoId);
         ItemCarrito GetItem(string user, int productoId);
         int GetCantidad(string user);
-        void Borrar(string user, int productoId);
+
     }
 }

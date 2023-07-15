@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using TiendaVirtual.Datos.Interfaces;
 using TiendaVirtual.Entidades.Entidades;
 
@@ -7,34 +8,59 @@ namespace TiendaVirtual.Datos.Repositorios
 {
     public class RepositorioCarritos : IRepositorioCarritos
     {
-        public void Agregar(ItemCarrito carritoTemp)
+        private readonly NeptunoDbContext _context;
+
+        public RepositorioCarritos(NeptunoDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public void Borrar(ItemCarrito carritoTemp)
+        public void Guardar(ItemCarrito carritoTemp)
         {
-            throw new NotImplementedException();
+            var itemInDb = GetItem(carritoTemp.UserName,
+                carritoTemp.ProductoId);
+
+            if (itemInDb != null)
+            {
+                itemInDb.Cantidad += carritoTemp.Cantidad;
+                _context.Entry(itemInDb).State = EntityState.Modified;
+
+            }
+            else
+            {
+                _context.Carrito.Add(carritoTemp);
+
+            }
+
         }
 
-        public void Editar(ItemCarrito carritoTemp)
+
+        public void Borrar(string user, int productoId)
         {
-            throw new NotImplementedException();
+            var itemInDb = GetItem(user, productoId);
+            if (itemInDb != null)
+            {
+                _context.Entry(itemInDb).State = EntityState.Deleted;
+            }
         }
+
 
         public int GetCantidad(string user)
         {
-            throw new NotImplementedException();
+            return _context.Carrito.Count(c => c.UserName == user);
         }
 
         public List<ItemCarrito> GetCarrito(string user)
         {
-            throw new NotImplementedException();
+            return _context.Carrito
+               .Where(c => c.UserName == user).ToList();
         }
 
         public ItemCarrito GetItem(string user, int productoId)
         {
-            throw new NotImplementedException();
+            return _context.Carrito
+                        .SingleOrDefault(i => i.ProductoId == productoId);
+
         }
     }
 }
