@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using TiendaVirtual.Datos;
 using TiendaVirtual.Datos.Interfaces;
 using TiendaVirtual.Entidades.Dtos.Venta;
 using TiendaVirtual.Entidades.Entidades;

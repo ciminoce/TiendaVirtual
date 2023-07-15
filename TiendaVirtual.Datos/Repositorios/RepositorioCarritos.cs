@@ -23,7 +23,7 @@ namespace TiendaVirtual.Datos.Repositorios
             if (itemInDb != null)
             {
                 itemInDb.Cantidad += carritoTemp.Cantidad;
-                _context.Entry(itemInDb).State = EntityState.Modified;
+                _context.Entry(itemInDb).State = EntityState.Deleted;
 
             }
             else

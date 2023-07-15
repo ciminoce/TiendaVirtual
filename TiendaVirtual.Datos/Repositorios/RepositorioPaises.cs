@@ -7,7 +7,7 @@ using TiendaVirtual.Datos;
 using TiendaVirtual.Datos.Interfaces;
 using TiendaVirtual.Entidades.Entidades;
 
-namespace Neptuno2022EF.Datos.Repositorios
+namespace TiendaVirtual.Datos.Repositorios
 {
     public class RepositorioPaises : IRepositorioPaises
     {

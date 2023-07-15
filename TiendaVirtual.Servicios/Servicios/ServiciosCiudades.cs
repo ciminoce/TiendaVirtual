@@ -7,7 +7,7 @@ using TiendaVirtual.Entidades.Dtos.Ciudad;
 using TiendaVirtual.Entidades.Entidades;
 using TiendaVirtual.Servicios.Interfaces;
 
-namespace Neptuno2022EF.Servicios.Servicios
+namespace TiendaVirtual.Servicios.Servicios
 {
     public class ServiciosCiudades : IServiciosCiudades
     {

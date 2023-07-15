@@ -6,7 +6,7 @@ using TiendaVirtual.Entidades.Dtos.Cliente;
 using TiendaVirtual.Entidades.Entidades;
 using TiendaVirtual.Servicios.Interfaces;
 
-namespace Neptuno2022EF.Servicios.Servicios
+namespace TiendaVirtual.Servicios.Servicios
 {
     public class ServiciosClientes : IServiciosClientes
     {

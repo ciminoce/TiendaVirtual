@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TiendaVirtual.Entidades.Entidades;
 
 namespace TiendaVirtual.Datos
@@ -31,6 +27,11 @@ namespace TiendaVirtual.Datos
             Database.SetInitializer<NeptunoDbContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());
+        }
+
+        internal object Entry(ItemCarrito itemInDb)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,7 +6,7 @@ using TiendaVirtual.Entidades.Dtos.Producto;
 using TiendaVirtual.Entidades.Entidades;
 using TiendaVirtual.Servicios.Interfaces;
 
-namespace Neptuno2022EF.Servicios.Servicios
+namespace TiendaVirtual.Servicios.Servicios
 {
     public class ServiciosProductos : IServiciosProductos
     {
@@ -98,7 +98,7 @@ namespace Neptuno2022EF.Servicios.Servicios
 
                 throw;
             }
-            
+
         }
 
         public int GetCantidad()
@@ -158,7 +158,7 @@ namespace Neptuno2022EF.Servicios.Servicios
         {
             try
             {
-                if (producto.ProductoId==0)
+                if (producto.ProductoId == 0)
                 {
                     _repositorio.Agregar(producto);
                 }

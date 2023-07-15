@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using TiendaVirtual.Datos;
 using TiendaVirtual.Datos.Interfaces;
 using TiendaVirtual.Entidades.Dtos.Categoria;
 using TiendaVirtual.Entidades.Entidades;
 
-namespace Neptuno2022EF.Datos.Repositorios
+namespace TiendaVirtual.Datos.Repositorios
 {
     public class RepositorioCategorias : IRepositorioCategorias
     {
@@ -114,8 +113,8 @@ namespace Neptuno2022EF.Datos.Repositorios
             try
             {
                 return _context.Categorias
-                    .OrderBy(c =>c.NombreCategoria)
-                    .Select(c=>new CategoriaListDto
+                    .OrderBy(c => c.NombreCategoria)
+                    .Select(c => new CategoriaListDto
                     {
                         CategoriaId = c.CategoriaId,
                         NombreCategoria = c.NombreCategoria,
@@ -157,11 +156,11 @@ namespace Neptuno2022EF.Datos.Repositorios
 
         public List<SelectListItem> GetCategoriasDropDownList()
         {
-            var lista=GetCategorias();
-            var dropDown=lista.Select(c=>new SelectListItem
+            var lista = GetCategorias();
+            var dropDown = lista.Select(c => new SelectListItem
             {
-                Text=c.NombreCategoria,
-                Value=c.CategoriaId.ToString()
+                Text = c.NombreCategoria,
+                Value = c.CategoriaId.ToString()
             }).ToList();
             return dropDown;
         }

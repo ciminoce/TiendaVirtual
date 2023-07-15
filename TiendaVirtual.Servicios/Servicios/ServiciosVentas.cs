@@ -8,7 +8,7 @@ using TiendaVirtual.Entidades.Dtos.Venta;
 using TiendaVirtual.Entidades.Entidades;
 using TiendaVirtual.Servicios.Interfaces;
 
-namespace Neptuno2022EF.Servicios.Servicios
+namespace TiendaVirtual.Servicios.Servicios
 {
     public class ServiciosVentas : IServiciosVentas
     {

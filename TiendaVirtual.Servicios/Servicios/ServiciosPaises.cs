@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using TiendaVirtual.Datos;
 using TiendaVirtual.Datos.Interfaces;
 using TiendaVirtual.Entidades.Entidades;
 using TiendaVirtual.Servicios.Interfaces;
 
-namespace Neptuno2022EF.Servicios.Servicios
+namespace TiendaVirtual.Servicios.Servicios
 {
     public class ServiciosPaises : IServiciosPaises
     {
@@ -138,10 +135,10 @@ namespace Neptuno2022EF.Servicios.Servicios
         {
             try
             {
-                if (pais.PaisId==0)
+                if (pais.PaisId == 0)
                 {
                     _repositorio.Agregar(pais);
-                    
+
                 }
                 else
                 {
