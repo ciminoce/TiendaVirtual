@@ -1,0 +1,76 @@
+﻿@model TiendaVirtual.Web.ViewModels.Producto.ProductoListVm
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ProductoListVm</h4>
+    <hr />
+    <div class="row">
+        <div class="col-8">
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NombreProducto)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NombreProducto)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Categoria)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Categoria)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PrecioUnitario)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PrecioUnitario)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Suspendido)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Suspendido)
+                </dd>
+
+
+            </dl>
+        </div>
+        <div class="col-4">
+
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Imagen)
+                @if (Model.Imagen != null)
+                {
+                    <img src="@Url.Content(TiendaVirtual.Utilidades.WC.ProductosImagenesFolder+Model.Imagen)" style="width:100px; height:100px" />
+                }
+                else
+                {
+                    <img src="@Url.Content(TiendaVirtual.Utilidades.WC.SinImagenDisponible)" style="width:100px; height:100px" />
+
+                }
+            </div>
+
+
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver", "Index",null,new {@class="btn btn-success"})
+        </div>
+    }
+</div>

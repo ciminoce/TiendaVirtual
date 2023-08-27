@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc
+@model TiendaVirtual.Web.ViewModels.Cliente.ClienteListSortVm
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between">
+    <h2>Lista de Clientes</h2>
+
+    <p>
+        @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+</div>
+@using (Html.BeginForm("Index", "Clientes", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-auto">
+            <label>Ordenar:</label>
+        </div>
+        <div class="col-auto">
+            @Html.DropDownListFor(model => Model.SortBy, new SelectList(Model.Sorts, "Value", "Key"), "Seleccione Orden", new { @class = "form-select" })
+        </div>
+        <div class="col-auto">
+            <input type="text" placeholder="Buscar...." name="SearchBy" class="form-control" />
+        </div>
+        <div class="col-auto">
+            <input type="submit" name="SortBy" value="Aplicar" class="btn btn-secondary" />
+        </div>
+    </div>
+
+}
+<table class="table table-bordered table-hover mt-3">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Clientes.FirstOrDefault().NombreCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Clientes.FirstOrDefault().Pais)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Clientes.FirstOrDefault().Ciudad)
+        </th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var item in Model.Clientes)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ciudad)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ClienteId }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ClienteId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+Página: @(Model.Clientes.PageCount < Model.Clientes.PageNumber ? 0 : Model.Clientes.PageNumber) de: @Model.Clientes.PageCount
+@Html.PagedListPager(Model.Clientes, page => Url.Action("Index", new
+{
+    page,
+    pageSize = ViewBag.PageSize,
+    SortBy=Model.SortBy,
+    SearchBy=Model.SearchBy
+}))
+

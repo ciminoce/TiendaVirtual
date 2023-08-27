@@ -1,0 +1,72 @@
+﻿@model TiendaVirtual.Web.ViewModels.Carrito.CheckOutVm
+@{
+    ViewBag.Title = "ConfirmOrder";
+}
+<form action="@Url.Action("ConfirmOrder","Carrito")" method="post" id="braintree-payment-form">
+    @Html.AntiForgeryToken()
+    <h2>Confirmar Order</h2>
+    @Html.ValidationSummary(false,"",new{@class="text-danger"})
+    <div class="row">
+
+        <div class="col-8">
+            <h3>Detalle de la Compra</h3>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Carrito.Items.FirstOrDefault().NombreProducto)</th>
+                        <th>@Html.DisplayNameFor(model => model.Carrito.Items.FirstOrDefault().PrecioUnitario)</th>
+                        <th>@Html.DisplayNameFor(model => model.Carrito.Items.FirstOrDefault().Cantidad)</th>
+                        <th>@Html.DisplayNameFor(model => model.Carrito.Items.FirstOrDefault().PrecioTotal)</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Carrito.Items)
+                    {                    
+                        <tr>
+                            <td>@item.NombreProducto</td>
+                            <td style="text-align:right">@item.PrecioUnitario.ToString("N")</td>
+                            <td style="text-align:right">@item.Cantidad</td>
+                            <td style="text-align:right">@item.PrecioTotal.ToString("N")</td>
+                        </tr>
+                    }                                                                          
+                    <tr>
+                        <td class="fw-bold">Totales:</td>
+
+                        <td colspan="2" class="fw-bold" style="text-align:right">@Model.Carrito.Items.Sum(i => i.Cantidad)</td>
+                        <td class="fw-bold" style="text-align:right">@Model.Carrito.Items.Sum(i => i.PrecioTotal).ToString("N")</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-4">
+            <h3>Detalle del Pago</h3>
+            <div class="form-group">
+                <label>Tarjeta de Crédito</label>
+                <input type="text" size="16" autocomplete="off" data-encrypted-name="CardNumber" />
+            </div>
+            <div class="form-group">
+                <label>CVV</label>
+                <input type="text" size="4" autocomplete="off" data-encrypted-name="CVV" />
+
+            </div>
+            <div class="form-group">
+                <label>Expiration (MM/YYYY)</label>
+                <input type="text" size="2" name="Month" /> / <input type="text" size="4" name="Year" />
+
+            </div>
+            <input type="submit" class="btn btn-primary" value="Pagar" />
+        </div>
+    </div>
+
+</form>
+
+@section scripts {
+    <script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+    <script type="text/javascript">
+        var braintree = Braintree.create("MIIBCgKCAQEAr2hSX6PRX2jbmYmyQwQhNbrhXXfCc1aPIke+kkL74KDI3meEJwHuLo1yE/otqcYbelBIoER+01+7Xiiucv1k4293hGvU1nN7Tf942JR3rodkDorUNBMRso6AMoNRb+++MZYfX53A+rXmmLqxT0aY75P/KPluAwkdWwqH/B0+JgwLmQdYNdoIpjUPy4wEFpiTbQCv0rIoViq1iv3dZ9UAX1/LicKpCuyYNdYnd3qqP114RZNu5nXWZZEDxswPij/ZqdYB+Vek5Vvp4iYTxkATtKGeQB/HNezeTX+mOPXpFmUpqnbQwOd0YrnaxwYoC+2jb4rrlcHCfh98n9LfM9AQ0wIDAQAB");
+
+        braintree.onSubmitEncryptForm("braintree-payment-form");
+    </script>
+}

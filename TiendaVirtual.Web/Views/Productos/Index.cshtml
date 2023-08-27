@@ -1,0 +1,129 @@
+﻿@using PagedList.Mvc
+@model TiendaVirtual.Web.ViewModels.Producto.ProductoFiltroVm
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between">
+    <h2>Listado de Productos</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+
+    }
+
+</div>
+@using (Html.BeginForm("Index", "Productos", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-auto">
+            <label>Categorías:</label>
+        </div>
+        <div class="col-auto">
+            @Html.DropDownListFor(model => model.CategoriaFiltro, Model.Categorias, "Ver Todos", new { @class = "form-select" })
+        </div>
+        <div class="col-auto">
+            <input type="submit" value="Filtrar" class="btn btn-secondary" />
+        </div>
+    </div>
+}
+
+<table class="table table-bordered table-hover mt-3">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos[0].Imagen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos[0].NombreProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos[0].Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos[0].PrecioUnitario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos[0].UnidadesDisponibles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Productos[0].Suspendido)
+        </th>
+        @if (User.IsInRole("Admin") || User.IsInRole("Cliente"))
+        {
+            <th></th>
+
+        }
+    </tr>
+
+    @foreach (var item in Model.Productos)
+    {
+        <tr>
+            <td>
+                @if (item.Imagen != null)
+                {
+                    <img src="@Url.Content(TiendaVirtual.Utilidades.WC.ProductosImagenesFolder+item.Imagen)" style="width:50px; height:50px" />
+                }
+                else
+                {
+                    <img src="@Url.Content(TiendaVirtual.Utilidades.WC.SinImagenDisponible)" style="width:50px; height:50px" />
+
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnidadesDisponibles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suspendido)
+            </td>
+            @if (User.IsInRole("Admin") || User.IsInRole("Cliente"))
+            {
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ProductoId }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ProductoId }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.ProductoId }, new { @class = "btn btn-danger" })
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        using (Html.BeginForm("AddToCart", "Carrito", FormMethod.Post))
+                        {
+                            @Html.ActionLink("Detalles", "Details", new { id = item.ProductoId }, new { @class = "btn btn-info" })
+
+                            @Html.Hidden("productoId", item.ProductoId)
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            <button type="submit" class="btn btn-outline-danger">
+                                Comprar
+                            </button>
+
+                        }
+
+
+                    }
+
+                </td>
+
+            }
+        </tr>
+    }
+
+</table>
+    Página: @(Model.Productos.PageCount < Model.Productos.PageNumber ? 0 : Model.Productos.PageNumber) de: @Model.Productos.PageCount
+    @Html.PagedListPager(Model.Productos, page => Url.Action("Index", new
+    {
+        CategoriaFiltro = Model.CategoriaFiltro,
+        page,
+        pageSize = ViewBag.PageSize
+    }))

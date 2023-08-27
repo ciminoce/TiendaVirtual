@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D68E44B0-4BBD-487E-A545-954975515773}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TiendaVirtual.Datos</RootNamespace>
+    <AssemblyName>TiendaVirtual.Datos</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8.1\System.Data.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EntityTypeConfigurations\CarritoEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\CategoriaEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\CiudadEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\ClienteEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\DetalleVentaEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\PaisEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\ProductoEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\ProveedorEntityTypeConfigurations.cs" />
+    <Compile Include="EntityTypeConfigurations\VentaEntityTypeConfigurations.cs" />
+    <Compile Include="Interfaces\IRepositorioCarritos.cs" />
+    <Compile Include="Interfaces\IRepositorioCategorias.cs" />
+    <Compile Include="Interfaces\IRepositorioCiudades.cs" />
+    <Compile Include="Interfaces\IRepositorioClientes.cs" />
+    <Compile Include="Interfaces\IRepositorioDetalleVentas.cs" />
+    <Compile Include="Interfaces\IRepositorioPaises.cs" />
+    <Compile Include="Interfaces\IRepositorioProductos.cs" />
+    <Compile Include="Interfaces\IRepositorioProveedores.cs" />
+    <Compile Include="Interfaces\IRepositorioVentas.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="NeptunoDbContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\RepositorioCarritos.cs" />
+    <Compile Include="Repositorios\RepositorioCategorias.cs" />
+    <Compile Include="Repositorios\RepositorioCiudades.cs" />
+    <Compile Include="Repositorios\RepositorioClientes.cs" />
+    <Compile Include="Repositorios\RepositorioDetalleVentas.cs" />
+    <Compile Include="Repositorios\RepositorioPaises.cs" />
+    <Compile Include="Repositorios\RepositorioProductos.cs" />
+    <Compile Include="Repositorios\RepositorioProveedortes.cs" />
+    <Compile Include="Repositorios\RepositorioVentas.cs" />
+    <Compile Include="UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TiendaVirtual.Entidades\TiendaVirtual.Entidades.csproj">
+      <Project>{89d1323e-f92a-42cc-a590-0fa68d711017}</Project>
+      <Name>TiendaVirtual.Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.Mvc">
+      <Version>5.2.9</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

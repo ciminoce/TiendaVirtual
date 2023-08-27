@@ -1,0 +1,65 @@
+﻿@using PagedList.Mvc
+@model TiendaVirtual.Web.ViewModels.Ciudad.CiudadFiltroVm
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between w-75">
+    <h2>Lista de Ciudades</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+</div>
+@using (Html.BeginForm("Index", "Ciudades", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-auto">
+            <label>País:</label>
+        </div>
+        <div class="col-auto">
+            @Html.DropDownListFor(model => model.PaisFiltro, Model.Paises, "Ver Todos", new { @class = "form-select" })
+        </div>
+        <div class="col-auto">
+            <input type="submit" value="Filtrar" class="btn btn-secondary" />
+        </div>
+    </div>
+}
+
+<table class="table table-bordered table-hover w-75">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ciudades.FirstOrDefault().NombreCiudad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ciudades.FirstOrDefault().NombrePais)
+        </th>
+        <th class="w-25"></th>
+    </tr>
+
+    @foreach (var item in Model.Ciudades)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCiudad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombrePais)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CiudadId }, new { @class = "btn btn-sm btn-warning" })
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-sm btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.CiudadId }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+    Página: @(Model.Ciudades.PageCount < Model.Ciudades.PageNumber ? 0 : Model.Ciudades.PageNumber) de: @Model.Ciudades.PageCount
+    @Html.PagedListPager(Model.Ciudades, page => Url.Action("Index", new
+    {
+        PaisFiltro=Model.PaisFiltro,
+        page,
+        pageSize = ViewBag.PageSize
+    }))

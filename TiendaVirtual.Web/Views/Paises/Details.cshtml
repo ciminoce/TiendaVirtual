@@ -1,0 +1,70 @@
+﻿@model TiendaVirtual.Web.ViewModels.Pais.PaisDetailVm
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles del País</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Pais.NombrePais)
+                @Html.TextBoxFor(model => model.Pais.NombrePais, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Pais.CantidadCiudades)
+                @Html.TextBoxFor(model => model.Pais.CantidadCiudades, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<p class="mt-3">
+    @Html.ActionLink("Agregar Ciudad", "AddCity", new { paisId = Model.Pais.PaisId }, new { @class = "btn btn-primary" })
+
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+</p>
+<hr />
+
+<table class="table table-bordered table-hover w-75">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ciudades.FirstOrDefault().NombreCiudad)
+        </th>
+        <th class="w-25">Acciones</th>
+    </tr>
+    @if (Model.Ciudades.Any())
+    {
+        foreach (var item in Model.Ciudades)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCiudad)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCity", new { id = item.CiudadId }, new { @class = "btn btn-sm btn-warning" })
+                    @Html.ActionLink("Delete", "DeleteCity", new { id = item.CiudadId }, new { @class = "btn btn-sm btn-danger" })
+                </td>
+            </tr>
+        }
+
+    }
+    else
+    {
+        <tr>
+            <td colspan="2" style="text-align:center" class="text-danger"><strong>No se han agregado ciudades todavía</strong></td>
+            
+        </tr>
+    }
+
+</table>
+

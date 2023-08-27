@@ -1,0 +1,91 @@
+﻿@model TiendaVirtual.Web.ViewModels.Carrito.CarritoVm
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Carrito de Compras</h2>
+<hr />
+@if (Model.returnUrl == null)
+{
+    Model.returnUrl = "Productos";
+}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Items[0].NombreProducto)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].PrecioUnitario)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].Cantidad)</th>
+            <th>@Html.DisplayNameFor(model => model.Items[0].PrecioTotal)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.NombreProducto</td>
+                <td style="text-align:right">@item.PrecioUnitario.ToString("N")</td>
+                <td style="text-align:right">@item.Cantidad</td>
+                <td style="text-align:right">@item.PrecioTotal.ToString("N")</td>
+                <td>
+                    <form method="post" action="@Url.Action("RemoveFromCart","Carrito")" id="deleteForm">
+                        @Html.Hidden("productoId", item.ProductoId)
+                        @Html.Hidden("returnUrl",Model.returnUrl)
+                        
+                        <button type="submit" class="btn btn-danger" onclick="return ConfirmarBorrado('@item.NombreProducto')">
+                            <i class="fa fa-trash"></i>
+                            Borrar
+                        </button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td class="fw-bold">Totales:</td>
+
+            <td colspan="2" class="fw-bold" style="text-align:right">@Model.Items.Sum(i => i.Cantidad)</td>
+            <td class="fw-bold" style="text-align:right">@Model.Items.Sum(i => i.PrecioTotal).ToString("N")</td>
+        </tr>
+    </tbody>
+</table>
+<div class="text-center">
+    <a class="btn btn-danger" href="@Url.Action("CancelOrder","Carrito")">
+        <i class="fa fa-trash-alt"></i>
+        Cancelar Orden
+    </a>
+    <a class="btn btn-success" href="@Model.returnUrl">
+        <i class="fa fa-arrow-alt-circle-left"></i>
+        Seguir Comprando
+    </a>
+    <a class="btn btn-primary" href="@Url.Action("ConfirmOrder","Carrito")">
+        <i class="fa fa-coins"></i>
+        Confirmar Compra
+    </a>
+</div>
+@section scripts
+{
+    <script>
+        function ConfirmarBorrado(nombreProducto) {
+            debugger;
+            Swal.fire({
+                title: 'Confirmar borrado',
+                text: '¿Desea borrar el producto ' + nombreProducto + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                console.log(result);
+                /*debugger;*/
+                if (result.isConfirmed) {
+                    // El usuario hizo clic en "Sí", enviar el formulario
+                    document.getElementById('deleteForm').submit();
+                }
+            });
+
+            // Devolver false para evitar el envío automático del formulario
+            return false;
+        }
+    </script>
+}

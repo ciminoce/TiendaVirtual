@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<TiendaVirtual.Web.ViewModels.Pais.PaisListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between w-75">
+    <h2>Lista de Países</h2>
+    <p>
+        <a class="btn btn-primary" href="@Url.Action("Create","Paises")">
+           <i class="fa fa-plus"></i> 
+            Nuevo
+        </a>
+    </p>
+
+</div>
+@using (@Html.BeginForm("Index", "Paises", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-auto">
+            <label>Mostrar:</label>
+        </div>
+        <div class="col-auto">
+            <select name="PageSize" id="PageSize" class="form-select">
+                <option @if (ViewBag.PageSize == 5) {@Html.Raw("selected"); } value="5">5</option>
+                <option @if (ViewBag.PageSize == 10) {@Html.Raw("selected"); } value="10">10</option>
+                <option 
+                        @if (ViewBag.PageSize == 15) 
+                        {@Html.Raw("selected");                         }
+                        value="15">
+                    15
+                
+                </option>
+                <option @if (ViewBag.PageSize == 20) {@Html.Raw("selected"); } value="20">20</option>
+            </select>
+        </div> 
+        <div class="col-auto">
+            <button class="btn btn-secondary" type="submit">
+                <i class="fa fa-search"></i>
+                Aplicar
+            </button>
+            @*<input type="submit" value="Aplicar" class="btn btn-secondary" />*@
+        </div>
+    </div>
+
+}
+<table class="table table-bordered table-hover mt-3">
+    <tr>
+        <th class="w-50">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombrePais)
+        </th>
+        <th class="w-25">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadCiudades)
+        </th>
+
+        <th class="w-25">
+            Acciones
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombrePais)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.CantidadCiudades)
+            </td>
+            <td>
+                <a class="btn btn-sm btn-warning" href="@Url.Action("Edit","Paises",new {id=item.PaisId})">
+                    <i class="fa fa-edit"></i>
+                    Editar
+                </a>
+                <a class="btn btn-sm btn-info" href="@Url.Action("Details","Paises",new {id=item.PaisId})">
+                    <i class="fa fa-list"></i>
+                    Detalles
+                </a>
+
+                <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","Paises", new {id=item.PaisId})">
+                    <i class="fa fa-trash"></i>
+                    Borrar
+                </a>
+
+            </td>
+        </tr>
+    }
+
+</table>
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    pageSize = ViewBag.PageSize
+}))
+
